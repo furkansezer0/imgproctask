@@ -4,9 +4,6 @@ import numpy as np
 
 cap = cv2.VideoCapture("auv1.mp4")
 
-
-
-
 lower_yellow = np.array([0,95,0])
 upper_yellow = np.array([58,255,255])
 
@@ -47,8 +44,7 @@ while cap.isOpened():
         
         height = frame.shape[0]
         width = frame.shape[1]
-        
-        
+             
         gauss = cv2.GaussianBlur(frame, (3,3), 0)
         hsvFrame = cv2.cvtColor(gauss, cv2.COLOR_BGR2HSV)
         maskFrame = cv2.inRange(hsvFrame, lower_yellow, upper_yellow)
@@ -60,8 +56,6 @@ while cap.isOpened():
         
         contour = max(contours, key = cv2.contourArea)
         
-        #print(contour)
-        
         cv2.drawContours(resFrame, contour,-1, (0,255,0),2)
         
         
@@ -69,29 +63,22 @@ while cap.isOpened():
         if M['m00'] != 0:
             cx = int(M['m10']/M['m00'])
             cy = int(M['m01']/M['m00'])
-            cv2.circle(resFrame, (cx, cy), 7, (0, 0, 255), -1)
-               
+            cv2.circle(resFrame, (cx, cy), 7, (0, 0, 255), -1)              
         
         cv2.circle(resFrame, (int(width/2),int(height/2)), radius=7, color=(0, 0, 255), thickness=-1)
         
         directionFinder(cx, cy, height, width)
         
-        
-        # Display the resulting frame
         cv2.imshow('Result Frame', resFrame)
     
-        # Press Q on keyboard to  exit
         if cv2.waitKey(100) & 0xFF == ord('q'):
             break
     
-      # Break the loop
     else: 
         break
 
-# When everything done, release the video capture object
 cap.release()
 
-# Closes all the frames
 cv2.destroyAllWindows()
     
 

@@ -4,8 +4,6 @@ from matplotlib import pyplot as plt
 
 resim = cv2.imread("resim1.jpg")
 
-
-
 griresim = cv2.cvtColor(resim, cv2.COLOR_BGR2GRAY)
 hsv = cv2.cvtColor(resim, cv2.COLOR_BGR2HSV)
 
@@ -26,9 +24,9 @@ mask1= closing
 
 
 mask2 = cv2.inRange(hsv, lower_white, upper_white)
-erosion = cv2.erode(mask2, kernel, iterations=4)
-dilation = cv2.dilate(erosion, kernel, iterations=16)
-closing2 = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel, iterations=16)
+erosion2 = cv2.erode(mask2, kernel, iterations=4)
+dilation2 = cv2.dilate(erosion2, kernel, iterations=16)
+closing2 = cv2.morphologyEx(dilation2, cv2.MORPH_CLOSE, kernel, iterations=16)
 mask2= closing2
 mask = cv2.bitwise_or(mask1, mask2)
     
@@ -47,10 +45,7 @@ print(f"Second Fish Area: {secondFish.size}")
 cv2.drawContours(res, firstFish,-1, (0,255,0),2)
 cv2.drawContours(res, secondFish,-1, (0,255,0),2)
 
-outputs= [resim, mask1, res]
-
-
-
+outputs= [resim, mask, res]
 
 
 for i in range(len(outputs)):
@@ -60,7 +55,6 @@ for i in range(len(outputs)):
     else:
         plt.imshow(outputs[i], cmap='gray')
     plt.xticks([]), plt.yticks([])
-
 
 
 k = cv2.waitKey(0)

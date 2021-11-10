@@ -15,19 +15,25 @@ kernel = np.ones((3,3), np.uint8)
 lower_yellow = np.array([0,44,120])
 upper_yellow = np.array([30,255,255])
 
-mask1 = cv2.inRange(hsv, lower_yellow, upper_yellow)
-dilation = cv2.dilate(mask1, kernel, iterations=2)
-mask1 = dilation
+mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
+dilation = cv2.dilate(mask, kernel, iterations=2)
+mask = dilation
 
-res = cv2.bitwise_and(resim,resim, mask= mask1)
+res = cv2.bitwise_and(resim,resim, mask= mask)
 
-number_of_white_pix = np.sum(mask1 == 255)
-number_of_black_pix = np.sum(mask1 == 0)
+number_of_white_pix = np.sum(mask == 255)
+number_of_black_pix = np.sum(mask == 0)
 
-print(number_of_white_pix/(number_of_white_pix+number_of_black_pix))
-print(number_of_black_pix+number_of_white_pix)
+print("Sarı renk piksel oranı: ",number_of_white_pix/(number_of_white_pix+number_of_black_pix))
 
-outputs= [resim, mask1, res]
+contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, 
+                                           cv2.CHAIN_APPROX_NONE)
+
+
+
+print("Toplam sarı balık sayısı: ",len(contours))
+
+outputs= [resim, mask, res]
 
 
 for i in range(len(outputs)):
