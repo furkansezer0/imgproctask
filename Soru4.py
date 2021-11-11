@@ -7,8 +7,6 @@ cap = cv2.VideoCapture('denizanası1.mp4')
 lower_bluewhite = np.array([0,0,75])
 upper_bluewhite = np.array([179,255,255])
 
-biggestCon = 0
-biggestConIndex = 0
 
 if (cap.isOpened()== False): 
   print("Error opening video stream or file")
@@ -27,6 +25,7 @@ while(cap.isOpened()):
     contours, hierarchy = cv2.findContours(maskFrame, cv2.RETR_TREE, 
                                            cv2.CHAIN_APPROX_NONE)
     
+    # En büyük kontür tespiti
     contour = max(contours, key = cv2.contourArea)
     
     

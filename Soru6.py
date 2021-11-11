@@ -8,9 +8,6 @@ kernel = np.ones((3,3), np.uint8)
 lower_bluewhite = np.array([25,85,89])
 upper_bluewhite = np.array([179,255,255])
 
-biggestCon = 0
-biggestConIndex = 0
-
 if (cap.isOpened()== False): 
   print("Error opening video stream or file")
 
@@ -22,6 +19,7 @@ while(cap.isOpened()):
     gauss = cv2.GaussianBlur(frame, (3,3), 0)
     hsvFrame = cv2.cvtColor(gauss, cv2.COLOR_BGR2HSV)
     maskFrame = cv2.inRange(hsvFrame, lower_bluewhite, upper_bluewhite)
+    # bitwise_not() işlemi ile yapılabilecek işlemin threshold ile yapılması
     ret,thresh = cv2.threshold(maskFrame,127,255,cv2.THRESH_BINARY_INV)
     maskFrame = thresh
     maskFrame = cv2.dilate(maskFrame, kernel, iterations=4)
@@ -35,8 +33,7 @@ while(cap.isOpened()):
     
     print(contour)
     
-    cv2.drawContours(resFrame, contour,-1, (0,255,0),2)
-    
+    cv2.drawContours(resFrame, contour,-1, (0,255,0),2)    
 
     cv2.imshow('Result Frame', resFrame)
 

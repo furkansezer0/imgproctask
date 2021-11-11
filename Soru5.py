@@ -11,9 +11,6 @@ upper_yellow = np.array([72,255,255])
 lower_blue = np.array([97,50,126])
 upper_blue = np.array([125,147,222])
 
-biggestCon = 0
-biggestConIndex = 0
-
 if (cap.isOpened()== False): 
   print("Error opening video stream or file")
 
@@ -40,6 +37,7 @@ while(cap.isOpened()):
     contours, hierarchy = cv2.findContours(maskFrame, cv2.RETR_TREE, 
                                            cv2.CHAIN_APPROX_NONE)
     
+    # En büyük kontürün tespiti
     contour = max(contours, key = cv2.contourArea)
     
     cv2.drawContours(resFrame, contours,-1, (0,255,0),2)

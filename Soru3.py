@@ -13,9 +13,11 @@ upper_white = np.array([69, 255, 255])
 lower_brown = np.array([0, 86, 0])
 upper_brown = np.array([22, 255, 123])
 
+
+# Renk karşılaştırması yapan fonksiyon
 def checkCoralColor(resim):
     
-    
+    # Görüntü çıktılarındaki mercanların üzerine yazılacak durumlar
     status = ['Saglikli', 'Agarmis', 'Olmus']
     
     hsv = cv2.cvtColor(resim , cv2.COLOR_BGR2HSV)
@@ -23,6 +25,7 @@ def checkCoralColor(resim):
     height = resim.shape[0]
     width = resim.shape[1]
 
+    # Resimlerin 2 ye bölünmesi
     halfLeftHSV = hsv[0:int(height), 0:int(width/2)]
     
     halfRightHSV = hsv[0:int(height), int(width/2 +10): width]

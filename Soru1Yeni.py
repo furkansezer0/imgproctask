@@ -4,7 +4,6 @@ from matplotlib import pyplot as plt
 
 resim = cv2.imread("resim1.jpg")
 
-griresim = cv2.cvtColor(resim, cv2.COLOR_BGR2GRAY)
 hsv = cv2.cvtColor(resim, cv2.COLOR_BGR2HSV)
 
 kernel = np.ones((3,3), np.uint8)
@@ -35,6 +34,7 @@ res = cv2.bitwise_and(resim,resim, mask= mask)
 contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, 
                                            cv2.CHAIN_APPROX_NONE)
 
+# Kontürler büyükten küçüğe sıralanıp en büyük 2 kontür seçildi
 firstFish = sorted(contours, key=cv2.contourArea, reverse=True)[0]
 print(f"First Fish Area: {firstFish.size}")
 
